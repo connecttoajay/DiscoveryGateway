@@ -1,0 +1,21 @@
+server:
+  port: 9003
+
+spring:
+  application:
+    name: API-Gateway  
+  config:
+    import: configserver:http://localhost:9004
+  cloud:
+    gateway:
+      routes:
+        - id: USER-SERVICE
+          uri:  lb://USER-SERVICE
+          predicates:
+            - Path=/users/**
+        - id: DEPARTMENT-SERVICE
+          uri:  lb://DEPARTMENT-SERVICE
+          predicates:
+            - Path=/departments/**          
+
+
